@@ -4,7 +4,7 @@
     "builds": [
       {
         "src": "main.py",
-        "use": "@liudonghual123/now-flask"
+        "use": "@liudonghua123/now-flask"
       }
     ],
     "routes": [
