@@ -1,8 +1,7 @@
 import os
-
 import flask_cors
 from bs4 import BeautifulSoup
-from flask import Flask, send_from_directory, send_file
+from flask import Flask, send_from_directory, send_file, Response
 from flask_cors import CORS
 import requests
 import firebase_admin
@@ -91,13 +90,12 @@ def music(name):
 @app.route("/download/<url>")
 def downloadMusic(url):
     YoutubeObject = YouTube("https://music.youtube.com/watch?v="+url)
-    dd = YoutubeObject.streams.get_audio_only().download("Uploads")
-    return send_file(dd.title())
+    music = YoutubeObject.streams.get_audio_only().download("Uploads")
+    return send_file(music.title())
 
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0",port= 5000)
-
+    app.run()
 
 # C:\Users\Yash Goswami\Desktop\WebBio\OFFCIAL_WEB\contents\OFF\back\Uploads\BTS (방탄소년단) FAKE LOVE Official MV.mp4
 # C:\Users\Yash Goswami\Desktop\WebBio\OFFCIAL_WEB\contents\OFF\back\Uploads\BTS (방탄소년단) 'FAKE LOVE' Official MV.mp4
