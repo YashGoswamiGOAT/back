@@ -1,5 +1,5 @@
 bs4
 lxml
 requests
-flask
+flask==1.1.4
 gunicorn
