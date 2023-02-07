@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "app.py",
+        "src": "main.py",
         "use": "@vercel/python",
         "config": {
           "command": "pip install -r requirements.txt && FLASK_APP=app.py FLASK_ENV=production flask run --host=0.0.0.0 --port=$PORT"
@@ -12,7 +12,7 @@
     "routes": [
       {
         "src": ".*",
-        "dest": "app.py"
+        "dest": "main.py"
       }
     ]
   }
