@@ -1,5 +1,10 @@
+beautifulsoup4
 bs4
+firebase-admin
+flask
+Flask
+Flask-Cors
 lxml
+pytube
 requests
-flask==1.1.4
-gunicorn
+requests-html
