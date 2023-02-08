@@ -1,4 +1,6 @@
 import os
+from io import BytesIO
+
 import flask_cors
 from bs4 import BeautifulSoup
 from flask import Flask, send_from_directory, send_file, Response
@@ -90,8 +92,11 @@ def music(name):
 @app.route("/download/<url>")
 def downloadMusic(url):
     YoutubeObject = YouTube("https://music.youtube.com/watch?v="+url)
-    music = YoutubeObject.streams.get_audio_only().download("Uploads")
-    return send_file(music.title())
+    buffer = BytesIO()
+    video = YoutubeObject.streams.get_audio_only()
+    video.stream_to_buffer(buffer)
+    buffer.seek(0)
+    return send_file(buffer,as_attachment=True,download_name=video.title+".mp4")
 
 
 if __name__=="__main__":
