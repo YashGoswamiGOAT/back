@@ -98,7 +98,7 @@ def downloadMusic(url):
     buffer.seek(0)
     return send_file(buffer,as_attachment=True,download_name=video.title+".mp4")
 
-@app.route("/compressed/")
+@app.route("/compressed")
 def compress():
     try:
         YoutubeObject = YouTube("https://music.youtube.com/watch?v=tH93lLehjCs")
