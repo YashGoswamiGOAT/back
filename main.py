@@ -7,7 +7,7 @@ from flask import Flask, send_from_directory, send_file, Response
 from flask_cors import CORS
 import requests
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials, storage
 from firebase_admin import db
 import json
 from pytube import YouTube
@@ -30,12 +30,14 @@ cred = credentials.Certificate(
 )
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://yashwebsitebalaji-default-rtdb.firebaseio.com/'
+    'databaseURL': 'https://yashwebsitebalaji-default-rtdb.firebaseio.com/',
+    'storageBucket' : 'yashwebsitebalaji.appspot.com'
 })
 
 # As an admin, the app has access to read and write all data, regradless of Security Rules
 ref = db.reference()
-print(ref.get())
+
+bucket = storage.bucket()
 
 app = Flask(__name__,static_folder="Uploads")
 CORS(app)
@@ -96,16 +98,11 @@ def downloadMusic(url):
     video = YoutubeObject.streams.get_audio_only()
     video.stream_to_buffer(buffer)
     buffer.seek(0)
-    return send_file(buffer,as_attachment=True,download_name=video.title+".mp4")
-
-@app.route("/compressed")
-def compress():
-    YoutubeObject = YouTube("https://music.youtube.com/watch?v=tH93lLehjCs")
-    buffer = BytesIO()
-    video = YoutubeObject.streams.get_audio_only()
-    video.stream_to_buffer(buffer)
-    buffer.seek(0)
-    return "done"
+    bucket = storage.bucket()
+    upload = bucket.blob(video.title+".mp4")
+    upload.upload_from_file(buffer)
+    upload.make_public()
+    return upload.public_url
 
 
 if __name__=="__main__":
