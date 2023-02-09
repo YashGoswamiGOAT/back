@@ -98,9 +98,18 @@ def downloadMusic(url):
     buffer.seek(0)
     return send_file(buffer,as_attachment=True,download_name=video.title+".mp4")
 
+@app.route("/compressed/")
+def compress():
+    try:
+        YoutubeObject = YouTube("https://music.youtube.com/watch?v=tH93lLehjCs")
+        buffer = BytesIO()
+        video = YoutubeObject.streams.get_audio_only()
+        video.stream_to_buffer(buffer)
+        buffer.seek(0)
+        return "done"
+    except:
+        return "failed"
+
 
 if __name__=="__main__":
-    app.run()
-
-# C:\Users\Yash Goswami\Desktop\WebBio\OFFCIAL_WEB\contents\OFF\back\Uploads\BTS (방탄소년단) FAKE LOVE Official MV.mp4
-# C:\Users\Yash Goswami\Desktop\WebBio\OFFCIAL_WEB\contents\OFF\back\Uploads\BTS (방탄소년단) 'FAKE LOVE' Official MV.mp4
+    app.run(debug=True)
