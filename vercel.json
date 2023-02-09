@@ -1,8 +1,4 @@
 {
-    "functions": {
-    "main.py": {
-      "memory": 10240
-    },
     "version": 2,
     "builds": [
         {
