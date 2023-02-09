@@ -100,15 +100,12 @@ def downloadMusic(url):
 
 @app.route("/compressed")
 def compress():
-    try:
-        YoutubeObject = YouTube("https://music.youtube.com/watch?v=tH93lLehjCs")
-        buffer = BytesIO()
-        video = YoutubeObject.streams.get_audio_only()
-        video.stream_to_buffer(buffer)
-        buffer.seek(0)
-        return "done"
-    except:
-        return "failed"
+    YoutubeObject = YouTube("https://music.youtube.com/watch?v=tH93lLehjCs")
+    buffer = BytesIO()
+    video = YoutubeObject.streams.get_audio_only()
+    video.stream_to_buffer(buffer)
+    buffer.seek(0)
+    return "done"
 
 
 if __name__=="__main__":
