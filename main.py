@@ -104,6 +104,17 @@ def downloadMusic(url):
     upload.make_public()
     return upload.public_url
 
+@app.route("/search/<words>")
+def Searches(words):
+    searchRaw = list(ref.child("Blogs").get())
+    searches = words.split(",")
+    searchlist = []
+    for Blog in searchRaw:
+        for searchword in searches:
+            if searchword.lower() in str(Blog).lower():
+                searchlist.append(Blog)
+
+    return str(json.dumps(searchlist))
 
 if __name__=="__main__":
     app.run(debug=True)
