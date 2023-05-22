@@ -5,8 +5,6 @@ flask
 Flask
 Flask-Cors
 lxml
-pytube
-pytube3
-pytube @ git+https://github.com/nficano/pytube
+pytube==11.0.0
 requests
 requests-html
